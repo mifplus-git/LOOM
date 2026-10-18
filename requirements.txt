@@ -1,0 +1,4 @@
+# Python 3.12 (Homebrew) venv
+#   /opt/homebrew/bin/python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt
+# 앱 창(QtWebEngine). 없으면 `app.py --browser`로 기본 브라우저에서 쓸 수 있다 (서버는 표준 라이브러리만 사용).
+PySide6>=6.7

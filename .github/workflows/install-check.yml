@@ -1,0 +1,24 @@
+# 설치 확인: README의 Windows 설치 순서대로 설치하고 tools/smoke_test.py를 돌린다.
+# Actions 탭 → '설치 확인' → Run workflow 로 실행한다 (push마다 돌지 않는다).
+name: 설치 확인
+
+on:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: 설치
+        shell: pwsh
+        run: |
+          py -3.12 -m venv .venv
+          .venv\Scripts\pip install -r requirements.txt
+      - name: 설치 확인
+        shell: pwsh
+        run: .venv\Scripts\python tools\smoke_test.py
