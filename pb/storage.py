@@ -3,7 +3,7 @@
 앱 설정 폴더(paths.CONFIG_DIR)의 storage.json 에 현재 위치를 적어 둔다.
 위치를 바꾸면 '이동 예약'만 해 두고, 앱을 다시 시작할 때(DB를 열기 전에) 옮긴다.
 처음 실행할 때 예전 위치에 데이터가 있으면 새 위치로 자동으로 옮긴다.
-이름을 바꾸기 전(Prompt Builder)의 앱 설정 · 기록 · 기본 저장 위치도 처음 한 번 새 이름으로 옮긴다.
+예전 이름(LOOM, Prompt Builder)의 앱 설정 · 기록 · 기본 저장 위치도 처음 한 번 새 이름으로 옮긴다.
 """
 from __future__ import annotations
 
@@ -103,26 +103,30 @@ def move_data(src, dst, log=print) -> None:
         pass
 
 
-def legacy_running() -> bool:
-    """이름을 바꾸기 전 앱(Prompt Builder)이 켜져 있는지: 그 앱의 실행 잠금을 잡아 본다."""
-    lock = paths.LEGACY_CONFIG_DIR / "instance.lock"
-    if not lock.is_file():
-        return False
-    try:
-        with open(lock, "a") as f:
-            if not native.try_lock(f):
-                return True
-            native.unlock(f)
-        return False
-    except OSError:
-        return True
+def legacy_running() -> str:
+    """이름을 바꾸기 전 앱이 켜져 있으면 그 이름: 그 앱의 실행 잠금을 잡아 본다."""
+    for name, folder in zip(paths.LEGACY_NAMES, paths.LEGACY_CONFIG_DIRS):
+        lock = folder / "instance.lock"
+        if not lock.is_file():
+            continue
+        try:
+            with open(lock, "a") as f:
+                if not native.try_lock(f):
+                    return name
+                native.unlock(f)
+        except OSError:
+            return name
+    return ""
 
 
 def migrate_legacy() -> list[str]:
     """처음 한 번: 예전 이름의 앱 설정 폴더(저장 위치 기록 · 창 저장소)와 기록 파일을 새 이름으로 옮긴다.
     예전 기본 저장 위치 폴더는 resolve()가 옮긴다. 기록을 열기 전에 부르므로 한 일을 돌려준다."""
     done = []
-    for old, new in ((paths.LEGACY_CONFIG_DIR, paths.CONFIG_DIR), (paths.LEGACY_LOG_PATH, paths.LOG_PATH)):
+    pairs = [(old, paths.CONFIG_DIR) for old in paths.LEGACY_CONFIG_DIRS] + [(old, paths.LOG_PATH) for old in paths.LEGACY_LOG_PATHS]
+    # Windows는 기록 파일이 앱 설정 폴더 안에 있어 폴더와 함께 옮겨 온다 — 이름만 바꾼다
+    pairs += [(paths.CONFIG_DIR / old.name, paths.LOG_PATH) for old in paths.LEGACY_LOG_PATHS if native.WINDOWS]
+    for old, new in pairs:
         if old.exists() and not new.exists():
             try:
                 new.parent.mkdir(parents=True, exist_ok=True)
@@ -160,8 +164,8 @@ def resolve(log=print) -> Path:
         except Exception as e:  # noqa: BLE001  옮기지 못하면 원래 위치를 그대로 쓴다
             cfg["last_error"] = f"데이터를 옮기지 못했습니다: {e}"
             log(cfg["last_error"])
-    # 예전 이름의 기본 저장 위치(~/Documents/Prompt Builder)를 쓰고 있었으면 새 이름(~/Documents/LOOM)으로 바꾼다
-    if same(current, paths.LEGACY_DATA_DIR) and has_data(current) and not paths.DEFAULT_DATA_DIR.exists():
+    # 예전 이름의 기본 저장 위치(문서/LOOM, 문서/Prompt Builder)를 쓰고 있었으면 새 이름으로 바꾼다. 사용자가 고른 다른 위치는 그대로
+    if any(same(current, d) for d in paths.LEGACY_DATA_DIRS) and has_data(current) and not paths.DEFAULT_DATA_DIR.exists():
         try:
             current.rename(paths.DEFAULT_DATA_DIR)
             log(f"저장 위치 이름 변경: {current} → {paths.DEFAULT_DATA_DIR}")
@@ -171,7 +175,7 @@ def resolve(log=print) -> Path:
             cfg["last_error"] = f"저장 위치 폴더 이름을 바꾸지 못했습니다: {e}"
             log(cfg["last_error"])
     if not has_data(current):
-        for legacy in LEGACY_DIRS:
+        for legacy in [*paths.LEGACY_DATA_DIRS, *LEGACY_DIRS]:
             if has_data(legacy) and not same(legacy, current):
                 try:
                     move_data(legacy, current, log)
@@ -213,7 +217,7 @@ def request_change(path: str, mode: str = "move") -> dict:
     if not target.is_absolute():
         raise ValueError(f"전체 경로를 입력하세요 (예: {paths.DEFAULT_DATA_DIR}).")
     cur = paths.DATA_DIR
-    # 비어 있지 않은 일반 폴더를 고르면 그 안에 'LOOM' 폴더를 만든다
+    # 비어 있지 않은 일반 폴더를 고르면 그 안에 'DeskLoom' 폴더를 만든다
     if target.exists() and not has_data(target) and any(p for p in target.iterdir() if p.name not in SKIP) \
             and target.name != paths.APP_NAME:
         target = target / paths.APP_NAME

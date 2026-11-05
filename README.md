@@ -1,17 +1,21 @@
-# LOOM
+<img src="static/img/icon-256.png" alt="" width="96">
+
+# DeskLoom
+
+> 예전 이름은 LOOM입니다. 저장소 주소는 그대로이고, 이 저장소의 이름 · 아이콘만 Desk 시리즈에 맞춰 바꿨습니다.
 
 **한국어** · [English](README.en.md)
 
 > **단어를 엮어, 이미지를 짓다.**  
 > Weave the Words. Build the Image.
 
-LOOM은 프롬프트를 이루는 단어와 요소를 한 올씩 엮어, 완성된 프롬프트 한 장으로 짜내는 ComfyUI용 프롬프트 빌더입니다.
+DeskLoom은 프롬프트를 이루는 단어와 요소를 한 올씩 엮어, 완성된 프롬프트 한 장으로 짜내는 ComfyUI용 프롬프트 빌더입니다.
 주제 · 스타일 · 조명 · 구도 같은 요소를 블록처럼 조합하고 템플릿으로 관리해, 원하는 이미지를 반복해서 만들 수 있게 합니다.
 
 - **WARP (날실)**: 구조와 템플릿. 베틀에 먼저 거는 세로 실처럼 프롬프트의 뼈대를 잡습니다
 - **WEFT (씨실)**: 요소와 표현. 날실 사이를 오가는 가로 실처럼 주제 · 스타일 · 조명 · 분위기를 엮습니다
 
-**LOOM — Prompt Builder for ComfyUI**는 내 컴퓨터에서만 동작하는 데스크톱 앱입니다.
+**DeskLoom — Prompt Builder for ComfyUI**는 내 컴퓨터에서만 동작하는 데스크톱 앱입니다.
 웹 서비스와 연동하지 않고 로그인 · 계정도 없습니다. 템플릿 · 이미지 · 생성 결과는 모두 내 컴퓨터의 저장 위치에 보관되고,
 완성한 프롬프트는 같은 컴퓨터나 네트워크의 ComfyUI로 바로 보내 이미지를 만듭니다.
 
@@ -42,7 +46,7 @@ LOOM은 프롬프트를 이루는 단어와 요소를 한 올씩 엮어, 완성�
 | | macOS 13 이상 (Apple Silicon) | Windows 10 · 11 (x64) |
 | --- | --- | --- |
 | 앱 실행 (소스로) | ✅ | ✅ |
-| 독립 앱 만들기 | ✅ `LOOM.app` | — (소스로 실행) |
+| 독립 앱 만들기 | ✅ `DeskLoom.app` | — (소스로 실행) |
 | 단축키 | ⌘ | Ctrl (사용법은 F1) |
 | 파일 위치 보기 | Finder | 파일 탐색기 |
 
@@ -65,21 +69,21 @@ brew install python@3.12 gh
 gh auth login                  # 비공개 저장소라 초대받은 GitHub 계정으로 로그인합니다
 
 # 2. 받기
-gh repo clone mifplus-git/LOOM
-cd LOOM
+gh repo clone mifplus-git/LOOM DeskLoom
+cd DeskLoom
 
 # 3. 설치
 $(brew --prefix)/bin/python3.12 -m venv .venv
 .venv/bin/pip install -r requirements.txt pyinstaller
 
-# 4. 앱 만들기 → /Applications/LOOM.app
+# 4. 앱 만들기 → /Applications/DeskLoom.app
 .venv/bin/python tools/build_app.py
 ```
 
 - `tools/build_app.py`는 Python · PySide6 · 코드를 모두 담은 독립 앱을 만들어 `/Applications`에 설치합니다.
-  만든 뒤에는 이 폴더가 없어도 실행됩니다. 만들기만 하려면 `--no-install`을 붙입니다 (결과: `build/dist/LOOM.app`).
+  만든 뒤에는 이 폴더가 없어도 실행됩니다. 만들기만 하려면 `--no-install`을 붙입니다 (결과: `build/dist/DeskLoom.app`).
 - 앱을 만들지 않고 바로 실행할 수도 있습니다: `.venv/bin/python app.py` (앱 창), `.venv/bin/python app.py --browser` (기본 브라우저).
-- 처음 실행하면 저장 위치(`~/Documents/LOOM`)에 빈 데이터 폴더를 만듭니다. 데이터는 아래 [데이터 넣기](#데이터-넣기)로 넣습니다.
+- 처음 실행하면 저장 위치(`~/Documents/DeskLoom`)에 빈 데이터 폴더를 만듭니다. 데이터는 아래 [데이터 넣기](#데이터-넣기)로 넣습니다.
 - 설치 확인: `.venv/bin/python tools/smoke_test.py` (테스트용 임시 폴더로 서버와 앱 창을 띄워 봅니다. 실제 데이터는 건드리지 않습니다)
 
 ### Windows
@@ -95,8 +99,8 @@ winget install GitHub.cli
 gh auth login                  # 비공개 저장소라 초대받은 GitHub 계정으로 로그인합니다
 
 # 2. 받기
-gh repo clone mifplus-git/LOOM
-cd LOOM
+gh repo clone mifplus-git/LOOM DeskLoom
+cd DeskLoom
 
 # 3. 설치
 py -3.12 -m venv .venv
@@ -108,11 +112,11 @@ py -3.12 -m venv .venv
 
 - `pythonw`는 콘솔 창 없이 띄웁니다. 문제가 생겨 메시지를 보려면 `.venv\Scripts\python app.py`로 실행하세요.
 - **바탕 화면 바로가기**: 바탕 화면에서 오른쪽 클릭 → 새로 만들기 → 바로 가기, 항목 위치에
-  `"<LOOM 폴더>\.venv\Scripts\pythonw.exe" "<LOOM 폴더>\app.py"`를 넣습니다.
+  `"<DeskLoom 폴더>\.venv\Scripts\pythonw.exe" "<DeskLoom 폴더>\app.py"`를 넣습니다. 아이콘은 `static\img\icon.ico`를 고르면 됩니다.
 - 설치 확인: `.venv\Scripts\python tools\smoke_test.py`
-- 처음 실행하면 저장 위치(`문서\LOOM`)에 빈 데이터 폴더를 만듭니다. 데이터는 아래 [데이터 넣기](#데이터-넣기)로 넣습니다.
+- 처음 실행하면 저장 위치(`문서\DeskLoom`)에 빈 데이터 폴더를 만듭니다. 데이터는 아래 [데이터 넣기](#데이터-넣기)로 넣습니다.
 - Windows에서는 독립 앱(.exe)을 만들지 않고 소스로 실행합니다 (`tools/build_app.py`는 macOS 전용).
-  메뉴 막대는 창 안에 있고, **LOOM 정보**는 **도움말** 메뉴에 있습니다.
+  메뉴 막대는 창 안에 있고, **DeskLoom 정보**는 **도움말** 메뉴에 있습니다.
 - 아래 예시의 `.venv/bin/python`은 Windows에서 `.venv\Scripts\python`입니다.
 
 ### 데이터 넣기
@@ -121,11 +125,11 @@ py -3.12 -m venv .venv
 
 | 파일 | 내용 | 넣는 곳 |
 | --- | --- | --- |
-| `loom-elements-….zip` | 프롬프트 요소 (빌더의 인물 · 의상 · 포즈 · 카메라 항목, 배경 옵션) | 데이터 → 프롬프트 요소 → 가져오기 |
-| `loom-places-….zip` | 유명 배경 (미리보기 이미지 포함) | 데이터 → 유명 배경 → 가져오기 |
-| `loom-templates-….zip` | 템플릿 (스타일 · 썸네일 포함) | 데이터 → 템플릿 → 가져오기 |
-| `loom-outfits-….zip` | 의상 프리셋 (미리보기 이미지 포함) | 데이터 → 의상 프리셋 → 가져오기 |
-| `loom-workflows-….zip` | ComfyUI workflow (API 형식 JSON) | 풀어서 JSON 파일들을 Workflow 메뉴에 끌어다 놓기 |
+| `deskloom-elements-….zip` | 프롬프트 요소 (빌더의 인물 · 의상 · 포즈 · 카메라 항목, 배경 옵션) | 데이터 → 프롬프트 요소 → 가져오기 |
+| `deskloom-places-….zip` | 유명 배경 (미리보기 이미지 포함) | 데이터 → 유명 배경 → 가져오기 |
+| `deskloom-templates-….zip` | 템플릿 (스타일 · 썸네일 포함) | 데이터 → 템플릿 → 가져오기 |
+| `deskloom-outfits-….zip` | 의상 프리셋 (미리보기 이미지 포함) | 데이터 → 의상 프리셋 → 가져오기 |
+| `deskloom-workflows-….zip` | ComfyUI workflow (API 형식 JSON) | 풀어서 JSON 파일들을 Workflow 메뉴에 끌어다 놓기 |
 
 데이터 묶음 zip은 풀지 말고 그대로 고르세요. 가져오기 전에 지금 데이터를 자동으로 백업하고, 가져오기는 지금 데이터에 더하기만 합니다.
 
@@ -134,7 +138,7 @@ py -3.12 -m venv .venv
 1. ComfyUI를 켭니다. 같은 컴퓨터라면 기본 주소 `http://127.0.0.1:8188`을 그대로 씁니다.
    다른 컴퓨터의 ComfyUI는 그 컴퓨터에서 `--listen`으로 실행하고 주소(예: `http://192.168.0.10:8188`)를 넣습니다.
 2. ComfyUI에서 쓰려는 workflow를 **Export (API)**로 저장합니다 (API 형식 JSON). 따로 받은 workflow 묶음을 써도 됩니다.
-3. LOOM의 **Workflow** 메뉴에서 그 JSON을 추가하고 기본으로 지정합니다.
+3. DeskLoom의 **Workflow** 메뉴에서 그 JSON을 추가하고 기본으로 지정합니다.
 4. **ComfyUI 서버** 메뉴에서 **연결 확인**을 누릅니다.
 
 프롬프트는 workflow의 `{{positive}}` · `{{negative}}` 자리에 들어갑니다. 자리가 없으면 제목이 ‘positive prompt’ · ‘user prompt’인
@@ -167,18 +171,18 @@ Windows에서는 ⌘ 대신 Ctrl이고, 사용법은 F1입니다.
 | ⌘+ · ⌘− · ⌘0 | 화면 크게 · 작게 · 원래 크기 |
 
 메뉴 막대의 **도움말**에서 사용법과 웹사이트 · 홈페이지 · 블로그 · GitHub로 바로 갈 수 있고,
-**LOOM 정보**(macOS는 LOOM 메뉴, Windows는 도움말 메뉴)에서 버전과 브랜드 소개를 봅니다.
+**DeskLoom 정보**(macOS는 DeskLoom 메뉴, Windows는 도움말 메뉴)에서 버전과 브랜드 소개를 봅니다.
 
 ## 데이터 위치
 
 | 무엇 | macOS | Windows |
 | --- | --- | --- |
-| 저장 위치 (DB · 이미지 · workflow · 생성 결과 · 백업) | `~/Documents/LOOM` | `문서\LOOM` |
-| 앱 설정 (저장 위치 기록 · 창 저장소) | `~/Library/Application Support/LOOM` | `%LOCALAPPDATA%\LOOM` |
-| 기록 (로그) | `~/Library/Logs/LOOM.log` | `%LOCALAPPDATA%\LOOM\LOOM.log` |
+| 저장 위치 (DB · 이미지 · workflow · 생성 결과 · 백업) | `~/Documents/DeskLoom` | `문서\DeskLoom` |
+| 앱 설정 (저장 위치 기록 · 창 저장소) | `~/Library/Application Support/DeskLoom` | `%LOCALAPPDATA%\DeskLoom` |
+| 기록 (로그) | `~/Library/Logs/DeskLoom.log` | `%LOCALAPPDATA%\DeskLoom\DeskLoom.log` |
 
 ```
-저장 위치 (예: ~/Documents/LOOM)
+저장 위치 (예: ~/Documents/DeskLoom)
   pb.sqlite3      DB (템플릿 · 요소 · 의상/배경 프리셋 · LoRA · 스타일 · 생성 기록)
   media/          프리셋 · 템플릿 이미지
   workflows/      ComfyUI API workflow JSON
@@ -187,28 +191,28 @@ Windows에서는 ⌘ 대신 Ctrl이고, 사용법은 F1입니다.
 ```
 
 - 저장 위치는 **데이터 → 위치 변경…**으로 바꿉니다. 앱을 다시 시작할 때 데이터가 자동으로 옮겨집니다.
-- 예전 이름(Prompt Builder, 1.3까지, macOS)을 쓰던 컴퓨터는 LOOM을 처음 열 때 앱 설정 · 기록 · 기본 저장 위치
-  (`~/Documents/Prompt Builder`)가 자동으로 새 이름으로 바뀝니다. 예전 앱이 켜져 있으면 먼저 종료하라고 알립니다.
+- 예전 이름(LOOM, 1.4까지 · Prompt Builder, 1.3까지)을 쓰던 컴퓨터는 DeskLoom을 처음 열 때 앱 설정 · 기록 · 기본 저장 위치
+  (`문서/LOOM`, `문서/Prompt Builder`)가 자동으로 새 이름으로 바뀝니다. 직접 고른 저장 위치는 그대로 씁니다. 예전 앱이 켜져 있으면 먼저 종료하라고 알립니다.
 
 ## 업데이트 · 삭제
 
 ```bash
-cd LOOM
+cd DeskLoom
 git pull
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python tools/build_app.py      # macOS: LOOM을 종료(⌘Q)한 뒤 앱을 다시 만듭니다
+.venv/bin/python tools/build_app.py      # macOS: DeskLoom을 종료(⌘Q)한 뒤 앱을 다시 만듭니다
 ```
 
-Windows는 LOOM을 닫고 `git pull`, `.venv\Scripts\pip install -r requirements.txt` 뒤 다시 실행하면 됩니다.
+Windows는 DeskLoom을 닫고 `git pull`, `.venv\Scripts\pip install -r requirements.txt` 뒤 다시 실행하면 됩니다.
 데이터는 앱 밖의 저장 위치에 있으므로 업데이트해도 그대로입니다.
 
-삭제: macOS는 `/Applications/LOOM.app`을 휴지통으로, Windows는 LOOM 폴더와 바로 가기를 지웁니다.
+삭제: macOS는 `/Applications/DeskLoom.app`을 휴지통으로, Windows는 DeskLoom 폴더와 바로 가기를 지웁니다.
 데이터까지 지우려면 위 표의 폴더도 지웁니다.
 
 ## 개발
 
 ```bash
-.venv/bin/python app.py --server --port=47990 --data-dir=/tmp/loomtest   # 서버만, 테스트용 데이터로
+.venv/bin/python app.py --server --port=47990 --data-dir=/tmp/deskloomtest   # 서버만, 테스트용 데이터로
 .venv/bin/python tools/mock_comfy.py      # 가짜 ComfyUI(8188): GPU 없이 생성 흐름 확인
 .venv/bin/python tools/shot.py URL out.png   # 화면 캡처 점검 (앱과 같은 QtWebEngine)
 ```
@@ -219,7 +223,7 @@ Windows는 LOOM을 닫고 `git pull`, `.venv\Scripts\pip install -r requirements
   화면의 단축키 · 파일 관리자 표기는 `static/js/core.js`의 `PB.mod` · `PB.fileManager`가 OS에 맞춥니다.
 - `--browser`로 띄웠을 때의 파일 고르기 대화상자는 macOS에서만 됩니다 (Windows는 앱 창으로 쓰세요).
 - `tools/smoke_test.py`: 어느 OS에서나 설치를 확인합니다. GitHub의 **Actions → 설치 확인**은 Windows에서 이것을 돌립니다.
-- 브랜드 문구 · 링크는 `pb/brand.py` 한 곳에 있습니다 (메뉴 · LOOM 정보 창 · 정보 화면이 함께 씁니다).
+- 브랜드 문구 · 링크는 `pb/brand.py` 한 곳에 있습니다 (메뉴 · DeskLoom 정보 창 · 정보 화면이 함께 씁니다).
 - **데이터 묶음**(`pb/datapack.py`): 종류마다 zip 하나로, `pb-data.json`(format `prompt-builder-data`, version 1, 행 데이터)과
   `media/<폴더>/<파일>`이 들어 있습니다. 형식 이름은 예전 이름 그대로라 이전에 만든 묶음도 가져올 수 있습니다.
   가져오기는 더하기만 하고(같은 템플릿 제목은 `제목 (1)`, 같은 항목은 건너뜀), 비우기는 이미지 폴더를 휴지통으로 보냅니다.
@@ -236,7 +240,7 @@ pb/
   paths.py        경로 (프로그램 파일은 앱 안, 데이터는 저장 위치)
   native.py       OS별 차이 (macOS · Windows)
   storage.py      저장 위치 설정 · 이동 예약 · 예전 이름에서 옮겨 오기
-  brand.py        브랜드 문구 · 링크          about.py   'LOOM 정보' 창
+  brand.py        브랜드 문구 · 링크          about.py   'DeskLoom 정보' 창
   server.py       표준 라이브러리 HTTP 서버 + API
   pages.py        페이지 골격과 부트 데이터 (화면은 JS가 그림)
   repo.py         DB 조회 · 저장 (빌더 요소, 프롬프트 요소 관리, 템플릿, 프리셋, LoRA, 스타일)

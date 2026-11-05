@@ -46,7 +46,7 @@ def check_kind(kind: str) -> dict:
 
 
 def default_name(kind: str, styles: list[int] | None = None, types: list[str] | None = None) -> str:
-    """스타일 · 종류를 골라 내보내면 이름에 넣는다: loom-templates-코스튬(미디어)-외1-20261016-1200.zip"""
+    """스타일 · 종류를 골라 내보내면 이름에 넣는다: deskloom-templates-코스튬(미디어)-외1-20261016-1200.zip"""
     labels: list[str] = []
     if kind == "templates" and styles:
         labels = [s["label"] for s in template_styles() if s["id"] in set(styles)]
@@ -57,7 +57,7 @@ def default_name(kind: str, styles: list[int] | None = None, types: list[str] | 
         name = re.sub(r"^\d+\s*[.)]\s*", "", labels[0])           # 앞의 순서 번호 (예: '50. ')
         name = re.sub(r"[\\/:*?\"<>|,\s]+", "_", name).strip("_.") or "part"  # 파일 이름에 못 쓰는 글자
         part = f"-{name}" + (f"-외{len(labels) - 1}" if len(labels) > 1 else "")
-    return f"loom-{kind}{part}-{datetime.now().strftime('%Y%m%d-%H%M')}.zip"
+    return f"deskloom-{kind}{part}-{datetime.now().strftime('%Y%m%d-%H%M')}.zip"
 
 
 def template_styles() -> list[dict]:

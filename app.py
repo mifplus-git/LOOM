@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""LOOM — Prompt Builder for ComfyUI. 단어를 엮어, 이미지를 짓다.
+"""DeskLoom — Prompt Builder for ComfyUI. 단어를 엮어, 이미지를 짓다.
 
-  LOOM.app                             # 독립 실행 앱 (tools/build_app.py로 만든다)
+  DeskLoom.app                             # 독립 실행 앱 (tools/build_app.py로 만든다)
   .venv/bin/python app.py              # 소스로 실행: 앱 창 (PySide6 · QtWebEngine)
   .venv/bin/python app.py --browser    # 기본 브라우저로 열기
   .venv/bin/python app.py --server     # 서버만 (개발용)
@@ -9,7 +9,7 @@
   (Windows: .venv\\Scripts\\python app.py · 콘솔 창 없이 .venv\\Scripts\\pythonw app.py)
 
 웹과 연동하지 않는다. 화면은 127.0.0.1에서만 열리고, 데이터는 사용자가 정한 저장 위치
-(기본: 문서/LOOM)에만 저장한다. macOS · Windows에서 동작한다 (OS별 차이는 pb/native.py).
+(기본: 문서/DeskLoom)에만 저장한다. macOS · Windows에서 동작한다 (OS별 차이는 pb/native.py).
 """
 from __future__ import annotations
 
@@ -123,10 +123,10 @@ def _set_mac_app_name(name: str) -> None:
 def run_window(port: int, selftest: bool = False) -> None:
     if native.MAC:
         _set_mac_app_name(APP_NAME)
-    if native.WINDOWS:  # 작업 표시줄에 python 대신 LOOM 아이콘이 보이도록
+    if native.WINDOWS:  # 작업 표시줄에 python 대신 DeskLoom 아이콘이 보이도록
         try:
             import ctypes
-            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("mif.LOOM")
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("mif.DeskLoom")
         except Exception:  # noqa: BLE001
             pass
     from PySide6.QtCore import QObject, QProcess, QSettings, QStandardPaths, Qt, QTimer, QUrl, Signal
@@ -143,7 +143,7 @@ def run_window(port: int, selftest: bool = False) -> None:
     app = QApplication(sys.argv)
     app.setApplicationName(APP_NAME)
     app.setApplicationDisplayName(APP_NAME)
-    # Qt 자체 저장소(~/Library/Application Support/<조직>/<앱>)가 CONFIG_DIR(…/LOOM)과 겹치지 않게
+    # Qt 자체 저장소(~/Library/Application Support/<조직>/<앱>)가 CONFIG_DIR(…/DeskLoom)과 겹치지 않게
     # 조직 이름은 앱 이름과 다르게 둔다 (macOS 디스크는 대소문자를 가리지 않는다)
     app.setOrganizationName("mif")
     app.setWindowIcon(QIcon(QPixmap.fromImage(draw_icon(512))))
@@ -178,7 +178,7 @@ def run_window(port: int, selftest: bool = False) -> None:
     _, port = start_server(port)
     base = f"http://127.0.0.1:{port}"
 
-    profile = QWebEngineProfile("LOOM", app)
+    profile = QWebEngineProfile("DeskLoom", app)
     paths.WEBVIEW_DIR.mkdir(parents=True, exist_ok=True)
     profile.setPersistentStoragePath(str(paths.WEBVIEW_DIR / "storage"))
     profile.setCachePath(str(paths.WEBVIEW_DIR / "cache"))
@@ -227,8 +227,9 @@ def run_window(port: int, selftest: bool = False) -> None:
             # --data-dir 점검 실행은 창 위치도 점검 폴더에 (실제 앱 설정을 건드리지 않게)
             self.qs = (QSettings(str(paths.DATA_DIR / "window.ini"), QSettings.IniFormat) if storage.OVERRIDE
                        else QSettings())
-            # 이름을 바꾸기 전(Prompt Builder)에 저장한 창 크기 · 위치를 이어 쓴다
-            geo = self.qs.value("geometry") or QSettings("promptbuilder", paths.LEGACY_NAME).value("geometry")
+            # 이름을 바꾸기 전(LOOM, Prompt Builder)에 저장한 창 크기 · 위치를 이어 쓴다
+            geo = (self.qs.value("geometry") or QSettings("mif", "LOOM").value("geometry")
+                   or QSettings("promptbuilder", "Prompt Builder").value("geometry"))
             if geo is not None:
                 self.restoreGeometry(geo)
             else:
@@ -270,7 +271,7 @@ def run_window(port: int, selftest: bool = False) -> None:
                 act = QAction(label, self)
                 act.triggered.connect(lambda _=False, a=attr: QDesktopServices.openUrl(QUrl.fromLocalFile(str(getattr(paths, a)))))
                 folder.addAction(act)
-            # 도움말: 사용법 · 웹사이트 · 홈페이지 · 블로그 · GitHub · 정보 (LUMIQ Studio와 같은 구성)
+            # 도움말: 사용법 · 웹사이트 · 홈페이지 · 블로그 · GitHub · 정보 (DeskRaw와 같은 구성)
             hlp = bar.addMenu("도움말")
             guide = QAction(f"{APP_NAME} 사용법", self)
             guide.setShortcut(QKeySequence.HelpContents)
@@ -283,7 +284,7 @@ def run_window(port: int, selftest: bool = False) -> None:
                 hlp.addAction(act)
             hlp.addSeparator()
             about = QAction(f"{APP_NAME} 정보", self)
-            about.setMenuRole(QAction.AboutRole)  # macOS: 앱 메뉴 맨 위의 'LOOM 정보'
+            about.setMenuRole(QAction.AboutRole)  # macOS: 앱 메뉴 맨 위의 'DeskLoom 정보'
             about.triggered.connect(lambda: AboutDialog(self, paths.APP_VERSION).exec())
             hlp.addAction(about)
 
@@ -386,9 +387,10 @@ def main() -> None:
     moved = []
     if not data_dir:  # --data-dir 점검 실행은 실제 설정을 건드리지 않는다
         from pb import storage
-        if storage.legacy_running():
-            alert(f"이름을 바꾸기 전 앱({paths.LEGACY_NAME})이 아직 켜져 있습니다.\n"
-                  f"{paths.LEGACY_NAME}를 종료(⌘Q)한 뒤 {APP_NAME}을 다시 여세요.")
+        old_app = storage.legacy_running()
+        if old_app:
+            alert(f"이름을 바꾸기 전 앱({old_app})이 아직 켜져 있습니다.\n"
+                  f"{old_app}를 종료한 뒤 {APP_NAME}을 다시 여세요.")
             return
         moved = storage.migrate_legacy()  # 기록 파일도 옮기므로 기록을 열기 전에
     setup_logging(isolated=bool(data_dir))

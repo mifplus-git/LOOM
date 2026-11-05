@@ -1,4 +1,4 @@
-/* LOOM — 공용 도구: API, 알림, 대화상자, 복사, 작업 상태 폴링 */
+/* DeskLoom — 공용 도구: API, 알림, 대화상자, 복사, 작업 상태 폴링 */
 (function () {
     'use strict';
     var PB = window.PB = window.PB || {};

@@ -704,7 +704,7 @@ class Worker(threading.Thread):
             return
         url = job["comfyui_url"].rstrip("/")
         try:
-            data = http_json("POST", url + "/prompt", {"prompt": workflow, "client_id": "loom-local"},
+            data = http_json("POST", url + "/prompt", {"prompt": workflow, "client_id": "deskloom-local"},
                              timeout=30)
         except ComfyError as e:
             msg = str(e)

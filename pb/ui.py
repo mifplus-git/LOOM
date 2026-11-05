@@ -123,7 +123,7 @@ def layout(active: str, title: str, body: str, *, scripts: list[str] | None = No
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{h(title)} · LOOM</title>
+<title>{h(title)} · DeskLoom</title>
 <link rel="icon" href="/static/img/icon-64.png">
 <link rel="stylesheet" href="{asset('css/app.css')}">
 <link rel="stylesheet" href="{asset('css/pages.css')}">
@@ -131,9 +131,9 @@ def layout(active: str, title: str, body: str, *, scripts: list[str] | None = No
 <body class="page-{h(active)} {h(body_class)}">
 <div class="{app_cls}" id="app">
   <aside class="sidebar">
-    <a class="brand" href="/builder" title="LOOM — Prompt Builder for ComfyUI">
+    <a class="brand" href="/builder" title="DeskLoom — Prompt Builder for ComfyUI">
       <img class="brand-mark" src="/static/img/icon-64.png" alt="">
-      <span class="brand-name">LOOM<span class="brand-sub">Prompt Builder for ComfyUI</span></span>
+      <span class="brand-name">DeskLoom<span class="brand-sub">Prompt Builder for ComfyUI</span></span>
     </a>
     <nav class="nav">{''.join(nav)}</nav>
     <div class="sidebar-foot" id="sbStatus">

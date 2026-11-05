@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""독립 실행형 'LOOM.app' 만들기 (PyInstaller).
+"""독립 실행형 'DeskLoom.app' 만들기 (PyInstaller).
 
 만들어진 앱에는 Python·PySide6(QtWebEngine)·코드·화면 파일이 모두 들어 있어 이 소스 폴더 없이 동작한다.
-데이터는 앱 밖의 저장 위치(기본 ~/Documents/LOOM)에 있다.
+데이터는 앱 밖의 저장 위치(기본 ~/Documents/DeskLoom)에 있다.
 
   .venv/bin/python tools/build_app.py               # build/dist 에 만들고 /Applications 에 설치
   .venv/bin/python tools/build_app.py --no-install  # 만들기만
@@ -18,8 +18,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-NAME = "LOOM"
-BUNDLE_ID = "local.loom.app"
+NAME = "DeskLoom"
+BUNDLE_ID = "local.deskloom.app"
 BUILD = ROOT / "build"
 
 
@@ -41,7 +41,7 @@ def build_icns(dst: Path):
 
 def main():
     if sys.platform != "darwin":
-        sys.exit("tools/build_app.py는 macOS 앱(LOOM.app)만 만듭니다. "
+        sys.exit("tools/build_app.py는 macOS 앱(DeskLoom.app)만 만듭니다. "
                  "Windows는 README의 설치 방법대로 .venv\\Scripts\\pythonw app.py 로 실행하세요.")
     from pb.paths import APP_VERSION as VERSION
     install = "--no-install" not in sys.argv

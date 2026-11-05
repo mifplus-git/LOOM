@@ -541,7 +541,7 @@ _data_lock = threading.Lock()
 # ---------------------------------------------------------------- 서버
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = f"LOOM/{paths.APP_VERSION}"
+    server_version = f"DeskLoom/{paths.APP_VERSION}"
     protocol_version = "HTTP/1.1"
 
     def log_message(self, fmt, *args):  # 조용히
