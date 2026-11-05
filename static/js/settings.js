@@ -1,4 +1,4 @@
-/* LOOM — ComfyUI 서버 · workflow · LoRA · 데이터 · 도움말 · 정보 (메인 메뉴마다 한 화면, B.section) */
+/* DeskLoom — ComfyUI 서버 · workflow · LoRA · 데이터 · 도움말 · 정보 (메인 메뉴마다 한 화면, B.section) */
 (function () {
     'use strict';
     var PB = window.PB, B = window.PB_BOOT || {}, esc = PB.esc, icon = PB.icon;
@@ -317,7 +317,7 @@
             if (!d || !d.ok) return PB.toast((d && d.message) || '위치를 바꾸지 못했습니다.', 'error');
             if (d.conflict) {
                 return PB.dialog({title: '그 위치에 이미 데이터가 있습니다', icon: 'warning',
-                    text: d.target + '\n\n이 위치의 LOOM 데이터로 바꿀까요? 지금 데이터는 원래 위치에 그대로 남습니다.',
+                    text: d.target + '\n\n이 위치의 DeskLoom 데이터로 바꿀까요? 지금 데이터는 원래 위치에 그대로 남습니다.',
                     confirmText: '그 데이터 사용'}).then(function (r) { if (r.isConfirmed) requestMove(d.target, 'use'); });
             }
             refreshStorage();
@@ -374,13 +374,13 @@
             '<li>기록(로그): <code>' + esc((B.paths || {}).log || '') + '</code></li></ul>']
     ];
     function helpCard() {
-        return '<section class="card set-card help-doc" id="help"><div class="card-title">' + icon('help') + '<span>도움말</span><span class="sub">LOOM 쓰는 법</span></div>' +
+        return '<section class="card set-card help-doc" id="help"><div class="card-title">' + icon('help') + '<span>도움말</span><span class="sub">DeskLoom 쓰는 법</span></div>' +
             '<nav class="help-toc">' + HELP.map(function (h) { return '<button type="button" class="chip" data-help-go="' + h[0] + '">' + esc(h[1]) + '</button>'; }).join('') + '</nav>' +
             HELP.map(function (h) { return '<div class="help-topic" data-help="' + h[0] + '"><h3>' + icon(h[2]) + esc(h[1]) + '</h3>' + h[3] + '</div>'; }).join('') +
             '</section>';
     }
 
-    // 브랜드 문구 · 링크는 pb/brand.py 한 곳에서 온다 (앱 메뉴의 'LOOM 정보' 창과 같다)
+    // 브랜드 문구 · 링크는 pb/brand.py 한 곳에서 온다 (앱 메뉴의 'DeskLoom 정보' 창과 같다)
     function aboutCard() {
         var br = B.brand || {};
         var v = B.version ? ' <span class="chip">v' + esc(B.version) + '</span>' : '';
@@ -527,7 +527,7 @@
             PB.api('/api/storage/choose', {start: store.data_dir}).then(function (d) {
                 if (d && d.ok && d.path) requestMove(d.path, 'move');
                 else if (d && d.ok && !d.path) {
-                    PB.promptText('새 저장 위치', store.default_dir, {text: '폴더 경로를 입력하세요. 비어 있지 않은 폴더를 고르면 그 안에 ‘LOOM’ 폴더를 만듭니다.', confirmText: '다음'}).then(function (p) { if (p) requestMove(p, 'move'); });
+                    PB.promptText('새 저장 위치', store.default_dir, {text: '폴더 경로를 입력하세요. 비어 있지 않은 폴더를 고르면 그 안에 ‘DeskLoom’ 폴더를 만듭니다.', confirmText: '다음'}).then(function (p) { if (p) requestMove(p, 'move'); });
                 }
             });
             return;

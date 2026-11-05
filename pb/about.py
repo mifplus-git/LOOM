@@ -1,4 +1,4 @@
-"""앱 메뉴의 'LOOM 정보' 창 (LUMIQ Studio 정보 창과 같은 구성).
+"""앱 메뉴의 'DeskLoom 정보' 창 (DeskRaw 정보 창과 같은 구성).
 이름 · 제품 설명 · 버전 · 슬로건 · 이름의 뜻(WARP · WEFT) · 소개 · 웹사이트 · 홈페이지 · 블로그 · GitHub."""
 from __future__ import annotations
 

@@ -9,7 +9,7 @@ build/
 # macOS
 .DS_Store
 
-# 개인 데이터는 저장 위치(~/Documents/LOOM)에 있다. 실수로 복사해도 올라가지 않게
+# 개인 데이터는 저장 위치(~/Documents/DeskLoom)에 있다. 실수로 복사해도 올라가지 않게
 /data/
 *.sqlite3
 *.sqlite3-*

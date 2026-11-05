@@ -1,15 +1,15 @@
-"""브랜드 (LOOM — Brand Identity 1.0, 2026-10-15).
+"""브랜드 (DeskLoom — Desk 시리즈의 AI 프롬프트 도우미. 1.4까지의 이름은 LOOM).
 
-앱 메뉴(도움말 · LOOM 정보), 정보 창, 설정 › 정보가 모두 이 값을 쓴다.
-표기 원칙: 브랜드는 항상 LOOM(대문자). 'Prompt Builder'는 제품 설명 문구이고 브랜드명의 일부가 아니다.
+앱 메뉴(도움말 · DeskLoom 정보), 정보 창, 설정 › 정보가 모두 이 값을 쓴다.
+표기 원칙: 브랜드는 항상 DeskLoom. 'Prompt Builder'는 제품 설명 문구이고 브랜드명의 일부가 아니다.
 """
 from __future__ import annotations
 
-NAME = "LOOM"
+NAME = "DeskLoom"
 PRODUCT = "Prompt Builder for ComfyUI"
 SLOGAN = "단어를 엮어, 이미지를 짓다."
 SLOGAN_EN = "Weave the Words. Build the Image."
-# 이름의 뜻: 베틀이 날실과 씨실을 엮어 천 한 장을 짜내듯
+# Loom의 뜻: 베틀이 날실과 씨실을 엮어 천 한 장을 짜내듯
 NAME_PARTS = [("WARP", "날실", "구조와 템플릿 — 프롬프트의 뼈대"),
               ("WEFT", "씨실", "요소와 표현 — 주제 · 스타일 · 조명 · 분위기")]
 INTRO = ("템플릿이라는 구조 위에 주제 · 스타일 · 조명 · 구도 같은 요소를 엮어\n"

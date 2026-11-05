@@ -1,4 +1,4 @@
-/* LOOM — 프롬프트 요소: 종류 · 그룹별로 보고 바로 등록 · 수정 · 삭제 */
+/* DeskLoom — 프롬프트 요소: 종류 · 그룹별로 보고 바로 등록 · 수정 · 삭제 */
 (function () {
     'use strict';
     var PB = window.PB, B = window.PB_BOOT || {}, esc = PB.esc, icon = PB.icon;

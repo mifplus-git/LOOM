@@ -4,7 +4,7 @@
   .venv/bin/python tools/smoke_test.py          (Windows: .venv\\Scripts\\python tools\\smoke_test.py)
 
 임시 폴더에만 쓰고 끝나면 지운다. --data-dir 점검 실행이라 실제 저장 위치 · 앱 설정 · 기록 파일은 건드리지 않고,
-켜 둔 LOOM과 함께 돌려도 된다. 앱 창은 화면에 띄우지 않고(offscreen) 연다. 문제가 있으면 종료 코드 1.
+켜 둔 DeskLoom과 함께 돌려도 된다. 앱 창은 화면에 띄우지 않고(offscreen) 연다. 문제가 있으면 종료 코드 1.
 """
 from __future__ import annotations
 
@@ -73,7 +73,7 @@ def app_cmd(*args: str) -> list[str]:
 
 
 def main() -> int:
-    print(f"LOOM 설치 확인 · Python {sys.version.split()[0]} · {sys.platform}")
+    print(f"DeskLoom 설치 확인 · Python {sys.version.split()[0]} · {sys.platform}")
     ok = True
     print("패키지")
     try:
@@ -84,8 +84,8 @@ def main() -> int:
     except Exception as e:  # noqa: BLE001  어떤 이유로든 못 불러오면 실패로 보고
         ok = check(False, f"PySide6: {e}")
 
-    tmp = Path(tempfile.mkdtemp(prefix="loom_check_"))
-    data = tmp / "LOOM 점검"  # 한글 · 공백이 든 경로까지 확인
+    tmp = Path(tempfile.mkdtemp(prefix="deskloom_check_"))
+    data = tmp / "DeskLoom 점검"  # 한글 · 공백이 든 경로까지 확인
     env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
     proc = None
     try:
@@ -100,7 +100,7 @@ def main() -> int:
         if up:
             for path in PAGES:
                 code, body = get(base + path)
-                ok = check(code == 200 and "LOOM" in body, f"{path}  {code}") and ok
+                ok = check(code == 200 and "DeskLoom" in body, f"{path}  {code}") and ok
             code, _ = get(base + "/static/img/icon-64.png")
             ok = check(code == 200, f"아이콘  {code}") and ok
             # 앱에는 데이터가 없다: 빈 DB로 시작하고, 요소를 하나 넣었다 지워 DB에 쓸 수 있는지 본다
@@ -131,7 +131,7 @@ def main() -> int:
             out = str(e.stdout or "")
         line = next((ln for ln in out.splitlines() if "SELFTEST" in ln), "")
         shown = line.split("SELFTEST", 1)[-1].split("| data=")[0].strip()
-        ok = check("LOOM" in line and "static=true" in line, shown or "창을 열지 못했습니다") and ok
+        ok = check("DeskLoom" in line and "static=true" in line, shown or "창을 열지 못했습니다") and ok
         if not line:
             print("\n".join("    " + ln for ln in out.strip().splitlines()[-15:]))
     finally:

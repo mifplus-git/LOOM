@@ -1,4 +1,4 @@
-/* LOOM — 갤러리: 생성 결과 보기 · 대기열 관리 */
+/* DeskLoom — 갤러리: 생성 결과 보기 · 대기열 관리 */
 (function () {
     'use strict';
     var PB = window.PB, esc = PB.esc, icon = PB.icon;

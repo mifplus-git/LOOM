@@ -1,4 +1,4 @@
-/* LOOM — 템플릿 만들기 (목록 · 편집기) */
+/* DeskLoom — 템플릿 만들기 (목록 · 편집기) */
 (function () {
     'use strict';
     var PB = window.PB, B = window.PB_BOOT || {}, esc = PB.esc, icon = PB.icon;

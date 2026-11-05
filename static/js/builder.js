@@ -1,4 +1,4 @@
-/* LOOM — 빌더 화면
+/* DeskLoom — 빌더 화면
    선택값은 모두 state 하나에 모으고, 바뀔 때마다 프롬프트를 다시 조합해 오른쪽 도크에 보여 준다. */
 (function () {
     'use strict';
